@@ -1,16 +1,23 @@
 # Works-on-My-Machine Preflight
 
-Diffs your actual toolchain against what the repo's own config says it should be, with one-click fixes.
+Compares your live toolchain to what the repo already declares — `.nvmrc`, `.tool-versions`, Dockerfile, CI setup actions, and `.env.example` — and shows pass/fail with optional one-click fix commands.
 
-## Status
+1. **Run Preflight** — extracts expectations and probes your machine.
+2. **Fix Selected** — shows the exact command and runs it in a terminal only after you confirm.
+3. **View Full Report** — detailed expected vs actual with source files.
 
-Scaffold generated. Core logic is not yet implemented — see `DIRECTIVE.md` for the full build plan.
+Agents can call `preflight_check_run` for a report-only check (never auto-fixes).
 
 ## Development
 
 ```bash
 npm install
-npm run watch    # esbuild + tsc in watch mode
+npm run watch
+npm run test:unit
 ```
 
-Then press `F5` in VS Code to launch an Extension Development Host.
+Press `F5` in VS Code to launch an Extension Development Host.
+
+## License
+
+MIT

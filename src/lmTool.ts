@@ -1,27 +1,38 @@
 import * as vscode from 'vscode';
+import type { PreflightService, PreflightReport } from './service';
+import type { DashboardProvider } from './dashboardProvider';
 
-// Language Model Tool registration — makes this extension's core capability
-// callable by Copilot Chat, Claude Code, or any other agent that supports
-// VS Code's Language Model Tool API. The `name` here MUST match the `name`
-// field of the languageModelTools entry in package.json.
-//
-// Docs: https://code.visualstudio.com/api/extension-guides/ai/tools
-
-export function registerPreflightCheckRunTool(context: vscode.ExtensionContext) {
+/**
+ * LM tool is report-only — never runs fix commands.
+ */
+export function registerPreflightCheckRunTool(
+  context: vscode.ExtensionContext,
+  getService: () => PreflightService | undefined,
+  setReport: (report: PreflightReport) => void,
+  dashboard: DashboardProvider
+) {
   context.subscriptions.push(
-    vscode.lm.registerTool("preflight_check_run", {
+    vscode.lm.registerTool('preflight_check_run', {
       async invoke(
-        options: vscode.LanguageModelToolInvocationOptions<any>,
+        _options: vscode.LanguageModelToolInvocationOptions<object>,
         _token: vscode.CancellationToken
       ) {
-        // TODO: implement using the same core logic the dashboard buttons
-        // call — do not duplicate; both entry points should call one
-        // shared service module (see DIRECTIVE.md, "Implementation phases").
-        const result = "preflight_check_run is not yet implemented \u2014 see DIRECTIVE.md";
-        return new vscode.LanguageModelToolResult([
-          new vscode.LanguageModelTextPart(result),
-        ]);
+        const service = getService();
+        if (!service) {
+          return textResult('No workspace folder is open.');
+        }
+        const report = await service.run();
+        setReport(report);
+        dashboard.showReport(report);
+        dashboard.setSummary(
+          `${report.summary.pass} pass · ${report.summary.fail} fail · ${report.summary.missing} missing`
+        );
+        return textResult(service.formatReport(report));
       },
     })
   );
+}
+
+function textResult(text: string): vscode.LanguageModelToolResult {
+  return new vscode.LanguageModelToolResult([new vscode.LanguageModelTextPart(text)]);
 }
