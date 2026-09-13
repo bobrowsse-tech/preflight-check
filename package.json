@@ -99,5 +99,17 @@
   "galleryBanner": {
     "color": "#166534",
     "theme": "dark"
+  },
+  "keywords": [
+    "preflight",
+    "nvm",
+    "toolchain",
+    "environment",
+    "onboarding",
+    "nodejs"
+  ],
+  "homepage": "https://github.com/bobrowsse-tech/preflight-check#readme",
+  "bugs": {
+    "url": "https://github.com/bobrowsse-tech/preflight-check/issues"
   }
 }
