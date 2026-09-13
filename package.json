@@ -94,5 +94,10 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/bobrowsse-tech/preflight-check"
+  },
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#166534",
+    "theme": "dark"
   }
 }
