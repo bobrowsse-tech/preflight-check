@@ -1,22 +1,41 @@
-# Works-on-My-Machine Preflight
+# Preflight Check
 
-Compares your live toolchain to what the repo already declares — `.nvmrc`, `.tool-versions`, Dockerfile, CI setup actions, and `.env.example` — and shows pass/fail with optional one-click fix commands.
+Verifies your machine matches what the repo expects — Node/Python/tool versions from `.nvmrc`, `.tool-versions`, Dockerfiles, and CI — before you waste time on cryptic failures.
 
-1. **Run Preflight** — extracts expectations and probes your machine.
-2. **Fix Selected** — shows the exact command and runs it in a terminal only after you confirm.
-3. **View Full Report** — detailed expected vs actual with source files.
-
-Agents can call `preflight_check_run` for a report-only check (never auto-fixes).
-
-## Development
+## Install
 
 ```bash
+git clone https://github.com/bobrowsse-tech/preflight-check.git
+cd preflight-check
 npm install
-npm run watch
-npm run test:unit
+npm run package
+npx @vscode/vsce package --no-dependencies
+code --install-extension preflight-check-0.1.0.vsix
 ```
 
-Press `F5` in VS Code to launch an Extension Development Host.
+Or press **F5** after `npm install`.
+
+## Use
+
+Open the **Preflight Check** side panel (status bar item also available):
+
+| Action | What it does |
+|---|---|
+| **Run Preflight** | Probes installed tools against repo expectations |
+| **Fix Selected** | Shows a suggested command; you confirm before it runs in a terminal |
+| **Open Report** | Full pass/fail/missing/conflict summary |
+
+Agents can call `preflight_check` (report-only — fixes need a human click).
+
+## How it’s built
+
+TypeScript strict + esbuild; probe/expectation logic in `src/service/` (mockable runners for tests).
+
+```bash
+npm run watch
+npm run test:unit
+npm run package
+```
 
 ## License
 
