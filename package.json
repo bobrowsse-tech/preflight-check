@@ -1,0 +1,95 @@
+{
+  "name": "preflight-check",
+  "displayName": "Works-on-My-Machine Preflight",
+  "description": "Diffs your actual toolchain against what the repo's own config says it should be, with one-click fixes.",
+  "version": "0.1.0",
+  "publisher": "bobrowsse-tech",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "preflight-checkContainer",
+          "title": "Works-on-My-Machine Preflight",
+          "icon": "$(checklist)"
+        }
+      ]
+    },
+    "views": {
+      "preflight-checkContainer": [
+        {
+          "id": "preflight-checkView",
+          "name": "Dashboard",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "preflight.run",
+        "title": "Works-on-My-Machine Preflight: Run Preflight"
+      },
+      {
+        "command": "preflight.fixSelected",
+        "title": "Works-on-My-Machine Preflight: Fix Selected"
+      },
+      {
+        "command": "preflight.viewReport",
+        "title": "Works-on-My-Machine Preflight: View Full Report"
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "preflight_check_run",
+        "tags": [
+          "preflight-check"
+        ],
+        "toolReferenceName": "preflight_check_run",
+        "displayName": "Works-on-My-Machine Preflight — preflight_check_run",
+        "modelDescription": "Compares the developer's local toolchain (node/python/docker/etc. versions and required env vars) against what this repo's own config declares it needs, and reports mismatches with fixes. Use this when debugging something that might be environment-related, or before starting work on an unfamiliar repo.",
+        "canBeReferencedInPrompt": true,
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "npm run check-types && node esbuild.js",
+    "check-types": "tsc --noEmit",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "vscode:prepublish": "npm run package",
+    "package": "npm run check-types && node esbuild.js --production",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.95.0",
+    "@types/node": "^20.0.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.24.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "semver": "latest",
+    "js-yaml": "latest",
+    "execa": "latest",
+    "which": "latest"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bobrowsse-tech/preflight-check"
+  }
+}
