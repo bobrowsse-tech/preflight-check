@@ -2,8 +2,13 @@
   "name": "preflight-check",
   "displayName": "Works-on-My-Machine Preflight",
   "description": "Diffs your actual toolchain against what the repo's own config says it should be, with one-click fixes.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "bobrowsse-tech",
+  "author": {
+    "name": "Bob Rowsse Walakira",
+    "email": "hello@bobrowsse.com",
+    "url": "https://bobrowsse.com"
+  },
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -110,6 +115,7 @@
   ],
   "homepage": "https://github.com/bobrowsse-tech/preflight-check#readme",
   "bugs": {
-    "url": "https://github.com/bobrowsse-tech/preflight-check/issues"
+    "url": "https://github.com/bobrowsse-tech/preflight-check/issues",
+    "email": "hello@bobrowsse.com"
   }
 }
